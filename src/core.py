@@ -1,6 +1,7 @@
 from collections.abc import Sequence
 import threading
 import urllib.request
+from urllib.parse import urlparse
 import queue
 import os
 import time
@@ -157,7 +158,7 @@ class Downloader():
             a = Audio(track)
             path = os.path.join(destination,
                                 re.sub('[^\w\-_\. ]', '_', a.name)) +\
-                                os.path.splitext(a.url)[-1]
+                                os.path.splitext(urlparse(a.url).path)[-1]
             task = DownloadTask(a.url, path)
             self.tasks.put(task)
 
